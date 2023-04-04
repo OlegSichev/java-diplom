@@ -17,7 +17,7 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter{
     public String convert(String url) throws IOException, BadImageSizeException {
         // Вот так просто мы скачаем картинку из интернета :)
         BufferedImage img = ImageIO.read(new URL(url));
-        double ratio = (double) img.getWidth() / img.getHeight(); //TODO не уверен, что правильно вычисляется RATIO
+        double ratio = (double) img.getWidth() / img.getHeight(); //TODO
         if (MaxWidth != 0 && MaxHeight !=0 && img.getWidth() > MaxWidth && img.getHeight() > MaxHeight){
             throw new BadImageSizeException(ratio, MaxRatio);
         }
@@ -94,7 +94,11 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter{
             for (int j = 0; j < newHeight; j++) { // бежит по высоте
                 int color = bwRaster.getPixel(i, j, new int[3])[0];
                 char c = schema.convert(color);
-                text[i][j] = c;//запоминаем символ c, например, в двумерном массиве или как-то ещё на ваше усмотрение
+                //запоминаем символ c, например, в двумерном массиве или как-то ещё на ваше усмотрение
+                text[j*2][i*2] = c;
+                text[j*2][i*2+1] = c;
+                text[j*2+1][i*2] = c;
+                text[j*2+1][i*2+1] = c;
             }
         }
 
@@ -104,8 +108,8 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter{
         // от схемы.
 
         StringBuilder result = new StringBuilder();
-        for (int i=0;i<newHeight;i++){
-            for (int j=0;j<newWidth;j++){
+        for (int i=0;i<newHeight / 2;i++){
+            for (int j=0;j<newWidth*2;j++){
                 result.append(text[i][j]);
             }
             result.append("\n");
