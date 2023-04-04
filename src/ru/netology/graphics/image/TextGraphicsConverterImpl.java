@@ -12,7 +12,7 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter{
     protected int MaxWidth = 0; // Максимальная ширина
     protected int MaxHeight = 0; // Максимальная высота
     protected double MaxRatio = 0; // Максимальное соотношение сторон (Ратио)
-    protected TextColorSchema schema = null;
+    protected TextColorSchema schema = new TextColorSchemaImpl();
     @Override
     public String convert(String url) throws IOException, BadImageSizeException {
         // Вот так просто мы скачаем картинку из интернета :)
